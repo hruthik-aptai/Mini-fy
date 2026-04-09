@@ -1,0 +1,16 @@
+{
+  "agents": {
+    "defaults": {
+      "sandbox": {
+        "workspaceAccess": "rw"
+      },
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "10m"
+      },
+      "params": {
+        "cacheRetention": "short"
+      }
+    }
+  }
+}

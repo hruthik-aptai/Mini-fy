@@ -1,0 +1,116 @@
+name: Validate Mini-fy
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Parse shell scripts
+        run: |
+          bash -n scripts/install.sh
+          bash -n scripts/doctor.sh
+          bash -n scripts/patch_openclaw_config.sh
+          bash -n scripts/apply_profile.sh
+          bash -n scripts/eval.sh
+
+      - name: Compile Python scripts
+        run: |
+          python -m py_compile scripts/patch_openclaw_config.py
+          python -m py_compile scripts/eval_suite.py
+          python -m py_compile scripts/compare_eval_reports.py
+
+      - name: Run doctor
+        run: bash scripts/doctor.sh "$PWD"
+
+      - name: Install into temp workspace
+        run: bash scripts/install.sh "${RUNNER_TEMP}/mini-fy-workspace"
+
+      - name: Apply coding profile
+        run: bash scripts/apply_profile.sh coding "${RUNNER_TEMP}/mini-fy-workspace"
+
+      - name: Merge config snippets
+        run: |
+          bash scripts/patch_openclaw_config.sh \
+            --config "${RUNNER_TEMP}/openclaw.json" \
+            --snippet config/openclaw.secure-baseline.example.jsonc \
+            --snippet config/openclaw.efficient.example.jsonc \
+            --profile coding
+
+      - name: Validate eval definitions
+        run: |
+          python scripts/eval_suite.py \
+            --cases data/evals/core.json data/evals/coding.json data/evals/research.json data/evals/ops.json \
+            --skip-run \
+            --output "${RUNNER_TEMP}/eval-report.json"
+
+      - name: Compare eval report with itself
+        run: python scripts/compare_eval_reports.py "${RUNNER_TEMP}/eval-report.json" "${RUNNER_TEMP}/eval-report.json"
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Parse PowerShell scripts
+        shell: pwsh
+        run: |
+          Get-ChildItem scripts -Filter *.ps1 | ForEach-Object {
+            [void][System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$null, [ref]$null)
+          }
+
+      - name: Compile Python scripts
+        shell: pwsh
+        run: |
+          python -m py_compile scripts/patch_openclaw_config.py
+          python -m py_compile scripts/eval_suite.py
+          python -m py_compile scripts/compare_eval_reports.py
+
+      - name: Run doctor
+        shell: pwsh
+        run: ./scripts/doctor.ps1 -Workspace . -SkipOpenClawChecks
+
+      - name: Install into temp workspace
+        shell: pwsh
+        run: |
+          $target = Join-Path $env:RUNNER_TEMP "mini-fy-workspace"
+          ./scripts/install.ps1 -Target $target
+
+      - name: Apply coding profile
+        shell: pwsh
+        run: |
+          $target = Join-Path $env:RUNNER_TEMP "mini-fy-workspace"
+          ./scripts/apply_profile.ps1 -Profile coding -Target $target
+
+      - name: Merge config snippets
+        shell: pwsh
+        run: |
+          $config = Join-Path $env:RUNNER_TEMP "openclaw.json"
+          ./scripts/patch_openclaw_config.ps1 `
+            -Config $config `
+            -Snippet config/openclaw.secure-baseline.example.jsonc `
+            -Snippet config/openclaw.efficient.example.jsonc `
+            -Profile coding
+
+      - name: Validate eval definitions
+        shell: pwsh
+        run: |
+          $report = Join-Path $env:RUNNER_TEMP "eval-report.json"
+          python scripts/eval_suite.py --cases data/evals/core.json data/evals/coding.json data/evals/research.json data/evals/ops.json --skip-run --output $report
+          python scripts/compare_eval_reports.py $report $report

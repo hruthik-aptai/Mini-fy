@@ -1,0 +1,30 @@
+[
+  {
+    "id": "core-workspace-files",
+    "prompt": "What workspace files does Mini-fy expect OpenClaw to load every session, and what are they for?",
+    "required_substrings": ["AGENTS.md", "SOUL.md", "USER.md", "TOOLS.md"],
+    "forbidden_substrings": ["just dump the whole internet into the prompt"],
+    "tags": ["core", "workspace"]
+  },
+  {
+    "id": "core-verify-install",
+    "prompt": "How should I verify whether Mini-fy is only cloned or actually active as my OpenClaw workspace?",
+    "required_substrings": ["doctor", "active workspace", "openclaw skills list"],
+    "forbidden_substrings": ["pulling the repo automatically makes it active"],
+    "tags": ["core", "verification"]
+  },
+  {
+    "id": "core-latest-facts",
+    "prompt": "Which Mini-fy skill should I use when the task depends on the latest external facts or version-sensitive information?",
+    "required_substrings": ["latest_primary_sources"],
+    "forbidden_substrings": ["guess from memory"],
+    "tags": ["core", "skills"]
+  },
+  {
+    "id": "core-secret-handling",
+    "prompt": "Where should secrets and private OpenClaw state live when using Mini-fy?",
+    "required_substrings": ["~/.openclaw", "private", "not", "public"],
+    "forbidden_substrings": ["commit them to the public repo"],
+    "tags": ["core", "security"]
+  }
+]

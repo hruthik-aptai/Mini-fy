@@ -61,6 +61,7 @@ fi
 
 expected_paths=(
   "AGENTS.md"
+  "BOOT.md"
   "SOUL.md"
   "USER.md"
   "IDENTITY.md"
@@ -68,6 +69,11 @@ expected_paths=(
   "HEARTBEAT.md"
   "MEMORY.md"
   "skills"
+  "scripts"
+  "profiles"
+  "docs"
+  "config"
+  "data"
 )
 
 missing=()
@@ -101,6 +107,13 @@ fi
 
 skill_count="$(find "${WORKSPACE_PATH}/skills" -name SKILL.md -type f 2>/dev/null | wc -l | tr -d ' ')"
 print_check "INFO" "Detected ${skill_count} Mini-fy skill files."
+
+if [ -f "${WORKSPACE_PATH}/AGENTS.md" ]; then
+  profiles="$(grep -o 'MINI-FY PROFILE:[^ ]\+ START' "${WORKSPACE_PATH}/AGENTS.md" 2>/dev/null | sed 's/MINI-FY PROFILE://; s/ START//' | sort -u | tr '\n' ',' | sed 's/,$//')"
+  if [ -n "$profiles" ]; then
+    print_check "INFO" "Active Mini-fy profiles: ${profiles}"
+  fi
+fi
 
 if ! command -v openclaw >/dev/null 2>&1; then
   print_check "WARN" "OpenClaw CLI is not on PATH, so live command checks were skipped."

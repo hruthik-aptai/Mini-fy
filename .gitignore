@@ -5,6 +5,7 @@
 *.pem
 **/secrets*
 *.bak-*
+reports/
 
 # If you turn this into a real workspace, keep personal memory out of the public repo
 memory/*.md

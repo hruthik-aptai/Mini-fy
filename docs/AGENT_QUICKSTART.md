@@ -31,6 +31,8 @@ Your first job is to determine which state applies.
 4. Decide whether the next step is:
    - install
    - verify
+   - patch config
+   - apply profile
    - personalize
    - work normally
 
@@ -68,9 +70,10 @@ Custom target:
 ### After merging
 
 1. Merge the relevant config snippets from `config/` into `~/.openclaw/openclaw.json`.
-2. Start a new session or restart the gateway.
-3. Run `scripts/doctor.ps1` or `scripts/doctor.sh`.
-4. Run the verification commands below.
+2. Optionally apply the matching workload profile from `profiles/`.
+3. Start a new session or restart the gateway.
+4. Run `scripts/doctor.ps1` or `scripts/doctor.sh`.
+5. Run the verification commands below.
 
 ## If This Repo Is Already The Active Workspace
 
@@ -117,7 +120,9 @@ Mini-fy should be considered correctly installed only if you can answer all of t
 ### Use the docs when you need explicit guidance
 
 - `docs/INSTALL.md` for human-facing installation detail
+- `docs/PROFILES.md` for workload-specific profile guidance
 - `docs/VERIFICATION.md` for doctor-script and verification guidance
+- `docs/EVALS.md` for benchmark and regression workflow
 - `docs/WORKSPACE_MAP.md` for file placement decisions
 - `docs/OPTIMIZATION_PRINCIPLES.md` for repo philosophy
 - `docs/SOURCES.md` and `data/source-index.json` for official source grounding

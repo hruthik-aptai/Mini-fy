@@ -1,0 +1,16 @@
+[
+  {
+    "id": "coding-small-diff",
+    "prompt": "When using the Mini-fy coding profile, what should guide how code changes are made?",
+    "required_substrings": ["smallest diff", "verification", "tests"],
+    "forbidden_substrings": ["rewrite unrelated parts"],
+    "tags": ["coding", "delivery"]
+  },
+  {
+    "id": "coding-skill",
+    "prompt": "Which profile-specific skill does the Mini-fy coding profile add, and when should it be used?",
+    "required_substrings": ["code_delivery_guard", "code changes"],
+    "forbidden_substrings": ["research"],
+    "tags": ["coding", "skills"]
+  }
+]

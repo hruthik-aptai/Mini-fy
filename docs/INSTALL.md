@@ -77,7 +77,13 @@ Optional:
 
 - `MEMORY.md`
 
-Then delete `BOOTSTRAP.md` after setup is complete.
+Then:
+
+1. patch config with `scripts/patch_openclaw_config.ps1` or `scripts/patch_openclaw_config.sh`
+2. optionally apply a profile from `profiles/`
+3. run the doctor script
+4. run the matching evals
+5. delete `BOOTSTRAP.md` after setup is complete
 
 ## Mode B: Merge Into An Existing Workspace
 
@@ -118,13 +124,17 @@ Custom target:
 - back up conflicting files and folders with a timestamp suffix
 - copy Mini-fy's portable files into the target
 - leave `~/.openclaw/` state alone
+- try to run the doctor automatically when OpenClaw is available
 
 ### What to do after merging
 
 1. Start a new session or restart the gateway.
-2. Run `openclaw skills list`.
-3. Skim your merged `AGENTS.md`, `TOOLS.md`, and `USER.md`.
-4. Remove or refine anything that conflicts with your existing workflow.
+2. Patch config with `scripts/patch_openclaw_config.ps1` or `scripts/patch_openclaw_config.sh`.
+3. Optionally apply a workload profile.
+4. Run the doctor script.
+5. Run `openclaw skills list`.
+6. Skim your merged `AGENTS.md`, `TOOLS.md`, and `USER.md`.
+7. Remove or refine anything that conflicts with your existing workflow.
 
 ## Recommended Config Merge Order
 
@@ -150,6 +160,7 @@ After installation, validate these:
 Useful commands:
 
 ```bash
+./scripts/doctor.sh
 openclaw skills list
 openclaw memory status
 openclaw sandbox explain

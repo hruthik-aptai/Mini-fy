@@ -1,0 +1,35 @@
+[
+  {
+    "id": "coding",
+    "title": "Coding",
+    "description": "Optimized for code changes, regression control, and test-backed delivery.",
+    "agents_append": "profiles/coding/AGENTS.append.md",
+    "config_example": "profiles/coding/config.example.jsonc",
+    "skills": [
+      "profiles/coding/skills/code_delivery_guard/SKILL.md"
+    ],
+    "evals": "data/evals/coding.json"
+  },
+  {
+    "id": "research",
+    "title": "Research",
+    "description": "Optimized for source discipline, dated citations, and fact-vs-inference separation.",
+    "agents_append": "profiles/research/AGENTS.append.md",
+    "config_example": "profiles/research/config.example.jsonc",
+    "skills": [
+      "profiles/research/skills/source_matrix/SKILL.md"
+    ],
+    "evals": "data/evals/research.json"
+  },
+  {
+    "id": "ops",
+    "title": "Operations",
+    "description": "Optimized for incidents, change control, reversibility, and low-blast-radius execution.",
+    "agents_append": "profiles/ops/AGENTS.append.md",
+    "config_example": "profiles/ops/config.example.jsonc",
+    "skills": [
+      "profiles/ops/skills/change_guard/SKILL.md"
+    ],
+    "evals": "data/evals/ops.json"
+  }
+]

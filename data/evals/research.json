@@ -1,0 +1,16 @@
+[
+  {
+    "id": "research-source-discipline",
+    "prompt": "When using the Mini-fy research profile, how should facts and inference be handled?",
+    "required_substrings": ["primary", "facts", "inference", "dates"],
+    "forbidden_substrings": ["just summarize blogs"],
+    "tags": ["research", "sources"]
+  },
+  {
+    "id": "research-skill",
+    "prompt": "Which profile-specific skill does the Mini-fy research profile add, and what is it for?",
+    "required_substrings": ["source_matrix", "compare", "sources"],
+    "forbidden_substrings": ["ops"],
+    "tags": ["research", "skills"]
+  }
+]

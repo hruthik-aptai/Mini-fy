@@ -65,12 +65,20 @@ That separation is the core design choice of this repo.
 | `SECURITY.md` | Public-repo security policy and secret-handling guidance |
 | `skills/` | Task-specific depth that should not live in the root prompt |
 | `config/` | Example `openclaw.json` snippets to merge into local config |
+| `profiles/` | Workload-specific packs for coding, research, and ops |
 | `docs/` | Detailed install notes, design rationale, and source notes |
 | `data/source-index.json` | Machine-readable map of official references used here |
+| `data/evals/` | Eval cases for core behavior plus profile-specific checks |
 | `scripts/install.ps1` | Safe Windows installer for merging this into an existing workspace |
 | `scripts/install.sh` | Safe Unix-like installer for merging this into an existing workspace |
 | `scripts/doctor.ps1` | Windows verification script for active-workspace detection and OpenClaw health checks |
 | `scripts/doctor.sh` | Unix-like verification script for active-workspace detection and OpenClaw health checks |
+| `scripts/patch_openclaw_config.ps1` | Safe Windows wrapper for merging config snippets into `~/.openclaw/openclaw.json` |
+| `scripts/patch_openclaw_config.sh` | Safe Unix-like wrapper for merging config snippets into `~/.openclaw/openclaw.json` |
+| `scripts/apply_profile.ps1` | Safe Windows profile-application helper |
+| `scripts/apply_profile.sh` | Safe Unix-like profile-application helper |
+| `scripts/eval.ps1` | Windows wrapper for Mini-fy eval runs |
+| `scripts/eval.sh` | Unix-like wrapper for Mini-fy eval runs |
 
 ## If You Are The Agent
 
@@ -156,19 +164,21 @@ Use this sequence when you want Mini-fy to become a real working workspace rathe
 1. Clone the repo.
 2. Point OpenClaw's workspace setting at the clone path.
 3. Run `openclaw setup --workspace <that-path>`.
-4. Merge the relevant `config/` examples into `~/.openclaw/openclaw.json`.
-5. Restart the gateway or begin a new session.
-6. Run the doctor script.
-7. Verify the setup.
+4. Patch config with `scripts/patch_openclaw_config.ps1` or `scripts/patch_openclaw_config.sh`.
+5. Optionally apply a workload profile.
+6. Restart the gateway or begin a new session.
+7. Run the doctor script.
+8. Verify the setup.
 
 ### Existing Workspace Flow
 
 1. Run the platform installer from the repo root.
 2. Let the installer back up conflicting files.
-3. Merge the relevant `config/` examples into `~/.openclaw/openclaw.json`.
-4. Restart the gateway or begin a new session.
-5. Run the doctor script.
-6. Verify the setup.
+3. Patch config with `scripts/patch_openclaw_config.ps1` or `scripts/patch_openclaw_config.sh`.
+4. Optionally apply a workload profile.
+5. Restart the gateway or begin a new session.
+6. Run the doctor script.
+7. Verify the setup.
 
 ### Verification Commands
 
@@ -215,13 +225,23 @@ Use:
 - `skills/debug_trace` for failures, flakiness, or unexplained slowness
 - `skills/workspace_curator` for improving the workspace itself
 
+### For workload-specific behavior
+
+Apply and use:
+
+- `profiles/coding` for code shipping and regression control
+- `profiles/research` for source-heavy research and synthesis
+- `profiles/ops` for incidents, deployments, and operational changes
+
 ### For explanation and maintenance
 
 Read:
 
 - `docs/AGENT_QUICKSTART.md`
+- `docs/PROFILES.md`
 - `docs/INSTALL.md`
 - `docs/VERIFICATION.md`
+- `docs/EVALS.md`
 - `docs/WORKSPACE_MAP.md`
 - `docs/OPTIMIZATION_PRINCIPLES.md`
 - `docs/SOURCES.md`
@@ -257,9 +277,11 @@ openclaw skills list
 Recommended next steps:
 
 1. Personalize `USER.md`, `TOOLS.md`, and `HEARTBEAT.md`
-2. Choose memory-search and model settings from `config/`
-3. Start a new session or restart the gateway so the skills load
-4. Delete `BOOTSTRAP.md` once setup is complete
+2. Patch config with `scripts/patch_openclaw_config.ps1` or `scripts/patch_openclaw_config.sh`
+3. Optionally apply a workload profile from `profiles/`
+4. Start a new session or restart the gateway so the skills load
+5. Run the doctor script and relevant evals
+6. Delete `BOOTSTRAP.md` once setup is complete
 
 ### Option B: Merge It Into An Existing Workspace
 
@@ -282,8 +304,76 @@ Both installers:
 - create timestamped backups of conflicting files or folders
 - copy Mini-fy's portable files into the target workspace
 - leave `~/.openclaw/` credentials and session state alone
+- try to run the doctor automatically when OpenClaw is available
 
 By default, the target is `~/.openclaw/workspace`.
+
+## Profiles
+
+Mini-fy now ships workload-specific profiles:
+
+- `coding`
+- `research`
+- `ops`
+
+Each profile includes:
+
+- an `AGENTS.md` append block
+- one workload-specific skill
+- a profile config example
+- a matching eval file
+
+Read [`docs/PROFILES.md`](./docs/PROFILES.md) before applying one.
+
+## Safer Config Patching
+
+Mini-fy now includes safe config patchers so you do not need to hand-merge every JSON snippet yourself.
+
+### Windows
+
+```powershell
+.\scripts\patch_openclaw_config.ps1 -Snippet config/openclaw.secure-baseline.example.jsonc -Snippet config/openclaw.efficient.example.jsonc
+```
+
+### Unix-like
+
+```bash
+./scripts/patch_openclaw_config.sh --snippet config/openclaw.secure-baseline.example.jsonc --snippet config/openclaw.efficient.example.jsonc
+```
+
+You can also merge a profile snippet directly:
+
+```bash
+./scripts/patch_openclaw_config.sh --profile coding
+```
+
+## Evals And Benchmarks
+
+Mini-fy now includes a lightweight eval layer:
+
+- `data/evals/core.json`
+- `data/evals/coding.json`
+- `data/evals/research.json`
+- `data/evals/ops.json`
+
+Use the wrappers:
+
+- `scripts/eval.ps1`
+- `scripts/eval.sh`
+
+Then compare before and after reports with `scripts/compare_eval_reports.py`.
+
+Read [`docs/EVALS.md`](./docs/EVALS.md) for the workflow.
+
+## CI
+
+This repo now ships a GitHub Actions workflow at [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) that:
+
+- parses PowerShell, shell, and Python scripts
+- dry-runs the doctor path
+- exercises install and profile application flows
+- validates config merging
+- validates eval definitions
 
 ## Public Repo Safety Model
 

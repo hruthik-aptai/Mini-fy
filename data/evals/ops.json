@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ops-change-discipline",
+    "prompt": "When using the Mini-fy ops profile, what should happen before and after a risky operational change?",
+    "required_substrings": ["preflight", "post-change", "rollback", "blast radius"],
+    "forbidden_substrings": ["make multiple risky changes at once"],
+    "tags": ["ops", "change-control"]
+  },
+  {
+    "id": "ops-skill",
+    "prompt": "Which profile-specific skill does the Mini-fy ops profile add, and when should it be used?",
+    "required_substrings": ["change_guard", "incident", "operational"],
+    "forbidden_substrings": ["feature writing"],
+    "tags": ["ops", "skills"]
+  }
+]

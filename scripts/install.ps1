@@ -10,6 +10,7 @@ $Items = @(
   ".gitignore",
   "README.md",
   "AGENTS.md",
+  "BOOT.md",
   "SOUL.md",
   "USER.md",
   "IDENTITY.md",
@@ -17,9 +18,14 @@ $Items = @(
   "HEARTBEAT.md",
   "BOOTSTRAP.md",
   "MEMORY.md",
+  "CONTRIBUTING.md",
+  "SECURITY.md",
+  "LICENSE",
   "docs",
   "data",
   "config",
+  "profiles",
+  "scripts",
   "skills"
 )
 
@@ -55,9 +61,10 @@ Write-Host ""
 Write-Host "Mini-fy installed into $Target"
 Write-Host "Next steps:"
 Write-Host "  1. Review USER.md, TOOLS.md, and HEARTBEAT.md"
-Write-Host "  2. Merge config snippets from config/"
-Write-Host "  3. Restart OpenClaw or start a new session"
-Write-Host "  4. Run: openclaw skills list"
+Write-Host "  2. Patch config with scripts/patch_openclaw_config.ps1"
+Write-Host "  3. Optionally apply a workload profile with scripts/apply_profile.ps1"
+Write-Host "  4. Restart OpenClaw or start a new session"
+Write-Host "  5. Run scripts/doctor.ps1 and then your evals"
 
 $DoctorScript = Join-Path $RepoRoot "scripts/doctor.ps1"
 if ((Get-Command openclaw -ErrorAction SilentlyContinue) -and (Test-Path -LiteralPath $DoctorScript)) {

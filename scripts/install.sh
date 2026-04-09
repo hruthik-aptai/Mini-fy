@@ -9,6 +9,7 @@ items=(
   ".gitignore"
   "README.md"
   "AGENTS.md"
+  "BOOT.md"
   "SOUL.md"
   "USER.md"
   "IDENTITY.md"
@@ -16,9 +17,14 @@ items=(
   "HEARTBEAT.md"
   "BOOTSTRAP.md"
   "MEMORY.md"
+  "CONTRIBUTING.md"
+  "SECURITY.md"
+  "LICENSE"
   "docs"
   "data"
   "config"
+  "profiles"
+  "scripts"
   "skills"
 )
 
@@ -52,9 +58,10 @@ done
 printf '\nMini-fy installed into %s\n' "$TARGET"
 printf 'Next steps:\n'
 printf '  1. Review USER.md, TOOLS.md, and HEARTBEAT.md\n'
-printf '  2. Merge config snippets from config/\n'
-printf '  3. Restart OpenClaw or start a new session\n'
-printf '  4. Run: openclaw skills list\n'
+printf '  2. Patch config with scripts/patch_openclaw_config.sh\n'
+printf '  3. Optionally apply a workload profile with scripts/apply_profile.sh\n'
+printf '  4. Restart OpenClaw or start a new session\n'
+printf '  5. Run scripts/doctor.sh and then your evals\n'
 
 if command -v openclaw >/dev/null 2>&1 && [ -f "${REPO_ROOT}/scripts/doctor.sh" ]; then
   printf '\nRunning Mini-fy doctor...\n'

@@ -75,13 +75,19 @@ function Get-ConfiguredWorkspace {
 $WorkspacePath = Get-NormalizedPath $Workspace
 $ExpectedPaths = @(
   "AGENTS.md",
+  "BOOT.md",
   "SOUL.md",
   "USER.md",
   "IDENTITY.md",
   "TOOLS.md",
   "HEARTBEAT.md",
   "MEMORY.md",
-  "skills"
+  "skills",
+  "scripts",
+  "profiles",
+  "docs",
+  "config",
+  "data"
 )
 
 Write-Host "Mini-fy doctor"
@@ -129,6 +135,16 @@ if (Test-Path -LiteralPath (Join-Path $WorkspacePath "BOOTSTRAP.md")) {
 
 $SkillFiles = Get-ChildItem -LiteralPath (Join-Path $WorkspacePath "skills") -Filter SKILL.md -Recurse -ErrorAction SilentlyContinue
 Write-Check "INFO" ("Detected {0} Mini-fy skill files." -f $SkillFiles.Count)
+
+$AgentsPath = Join-Path $WorkspacePath "AGENTS.md"
+if (Test-Path -LiteralPath $AgentsPath) {
+  $AgentsText = Get-Content -LiteralPath $AgentsPath -Raw
+  $ProfileMatches = [regex]::Matches($AgentsText, '<!-- MINI-FY PROFILE:(?<name>[^ ]+) START -->')
+  if ($ProfileMatches.Count -gt 0) {
+    $Profiles = $ProfileMatches | ForEach-Object { $_.Groups["name"].Value } | Select-Object -Unique
+    Write-Check "INFO" ("Active Mini-fy profiles: " + ($Profiles -join ", "))
+  }
+}
 
 if ($SkipOpenClawChecks) {
   Write-Check "INFO" "Skipped live OpenClaw command checks by request."

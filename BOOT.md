@@ -9,10 +9,11 @@ Run this checklist on startup or first contact with the workspace:
    - `openclaw skills list`
    - `openclaw status`
    - `openclaw memory status`
-5. If Mini-fy is not yet installed into the real workspace, recommend or run:
+5. If the workload is clearly coding, research, or ops heavy, consider applying the matching profile.
+6. If Mini-fy is not yet installed into the real workspace, recommend or run:
    - `scripts/install.ps1` on Windows
    - `scripts/install.sh` on Unix-like systems
-6. Tell the human the current state in one line:
+7. Tell the human the current state in one line:
    - template only
    - installed but not verified
    - installed and verified

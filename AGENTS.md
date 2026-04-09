@@ -30,6 +30,10 @@ Do this in order:
 
 - Use root files for recurring behavior.
 - Use `skills/` for task-specific depth.
+- Use `profiles/` when the workload is clearly coding, research, or ops heavy.
+- Use `scripts/patch_openclaw_config.ps1` or `scripts/patch_openclaw_config.sh` for safer config merging instead of hand-editing when possible.
+- Use `scripts/doctor.ps1` or `scripts/doctor.sh` to classify clone vs active workspace and verify install health.
+- Use `docs/EVALS.md` and `data/evals/` to measure behavior after changing config, profiles, or prompts.
 - Use `docs/AGENT_QUICKSTART.md` when you need the explicit installation and verification playbook.
 - Use `docs/SOURCES.md` and `data/source-index.json` when you need to justify guidance or refresh it from official sources.
 - Use `docs/WORKSPACE_MAP.md` when deciding where a new instruction belongs.
@@ -80,6 +84,7 @@ Do this in order:
 - Use `skills/eval_flywheel` before prompt, model, config, or workflow tuning.
 - Use `skills/debug_trace` for failures, flakiness, or slowness.
 - Use `skills/workspace_curator` when improving the workspace itself.
+- Use `docs/PROFILES.md` when the workload needs a profile-specific bias.
 
 ## Definition Of Success
 

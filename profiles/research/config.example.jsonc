@@ -1,0 +1,15 @@
+{
+  "agents": {
+    "defaults": {
+      "sandbox": {
+        "workspaceAccess": "ro"
+      },
+      "memorySearch": {
+        "provider": "openai"
+      },
+      "params": {
+        "cacheRetention": "short"
+      }
+    }
+  }
+}
