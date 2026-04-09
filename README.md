@@ -83,6 +83,148 @@ If an OpenClaw agent opens this repo and needs to know what to do next, the inte
 
 That flow is now encoded directly into the root workspace files so the next agent has less ambiguity.
 
+## Exact Agent Decision Tree
+
+If you are an OpenClaw agent that just pulled or opened this repo, do not assume cloning equals installation.
+
+Your first task is to classify the current state:
+
+### State A: Template Only
+
+This means:
+
+- the repo exists on disk
+- but OpenClaw may still be using a different workspace
+
+In this state, the next action is:
+
+1. tell the human this repo is only cloned
+2. install it into the real workspace with:
+   - `.\scripts\install.ps1` on Windows
+   - `./scripts/install.sh` on Unix-like systems
+3. merge the relevant snippets from `config/` into `~/.openclaw/openclaw.json`
+4. restart the gateway or start a new session
+5. run verification
+
+### State B: Active Workspace
+
+This means:
+
+- OpenClaw is already pointed at this repo path
+- the root files and skills should be live
+
+In this state, the next action is:
+
+1. read `BOOT.md`
+2. read `BOOTSTRAP.md` if it still exists
+3. verify the environment
+4. report whether setup is complete or still missing config / restart steps
+
+### State C: Installed But Not Verified
+
+This means:
+
+- Mini-fy has been copied into the workspace
+- but no one has yet confirmed the skills, memory, and active path
+
+In this state, run:
+
+```bash
+openclaw skills list
+openclaw status
+openclaw memory status
+```
+
+Then report one of these exact outcomes:
+
+- `Mini-fy is only cloned; it is not yet the active workspace.`
+- `Mini-fy is installed into the active workspace, but verification is still pending.`
+- `Mini-fy is installed and verified; the loaded skills and workspace path match expectations.`
+
+## Exact Installation Flow
+
+Use this sequence when you want Mini-fy to become a real working workspace rather than just a GitHub clone.
+
+### Fresh Workspace Flow
+
+1. Clone the repo.
+2. Point OpenClaw's workspace setting at the clone path.
+3. Run `openclaw setup --workspace <that-path>`.
+4. Merge the relevant `config/` examples into `~/.openclaw/openclaw.json`.
+5. Restart the gateway or begin a new session.
+6. Verify the setup.
+
+### Existing Workspace Flow
+
+1. Run the platform installer from the repo root.
+2. Let the installer back up conflicting files.
+3. Merge the relevant `config/` examples into `~/.openclaw/openclaw.json`.
+4. Restart the gateway or begin a new session.
+5. Verify the setup.
+
+### Verification Commands
+
+These are the minimum commands that should be run after installation:
+
+```bash
+openclaw skills list
+openclaw status
+openclaw memory status
+openclaw agent --message "What workspace files are loaded every session?"
+```
+
+The setup should not be called complete until you can answer:
+
+- What is the active workspace path?
+- Are the Mini-fy skills loaded?
+- Were the config examples actually merged where needed?
+- Was the gateway restarted or a new session started?
+- Is memory healthy if enabled?
+
+## Exact Normal-Use Playbook
+
+Once Mini-fy is installed and verified, use it like this:
+
+### For recurring behavior
+
+Read and obey:
+
+- `AGENTS.md`
+- `SOUL.md`
+- `USER.md`
+- `TOOLS.md`
+- `HEARTBEAT.md`
+- `MEMORY.md`
+
+### For task-specific behavior
+
+Use:
+
+- `skills/latest_primary_sources` for fresh facts and version-sensitive work
+- `skills/lean_context` for noisy or long sessions
+- `skills/eval_flywheel` for tuning prompts, workflows, or config
+- `skills/debug_trace` for failures, flakiness, or unexplained slowness
+- `skills/workspace_curator` for improving the workspace itself
+
+### For explanation and maintenance
+
+Read:
+
+- `docs/AGENT_QUICKSTART.md`
+- `docs/INSTALL.md`
+- `docs/WORKSPACE_MAP.md`
+- `docs/OPTIMIZATION_PRINCIPLES.md`
+- `docs/SOURCES.md`
+- `data/source-index.json`
+
+## What An Agent Should Never Assume
+
+- Pulling the repo automatically makes it the active workspace.
+- Example config files are already merged into live config.
+- Skills are loaded without a new session or gateway restart.
+- A public template repo should contain secrets or private memory.
+- Bigger prompt context is automatically better.
+
 ## Quick Start
 
 You have two good ways to use Mini-fy.
