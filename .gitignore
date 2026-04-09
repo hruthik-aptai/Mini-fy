@@ -1,0 +1,17 @@
+# Public-safe defaults
+.env
+.env.*
+*.key
+*.pem
+**/secrets*
+*.bak-*
+
+# If you turn this into a real workspace, keep personal memory out of the public repo
+memory/*.md
+memory/**/*.md
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

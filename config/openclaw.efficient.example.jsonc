@@ -1,0 +1,40 @@
+{
+  // Merge the parts you want into ~/.openclaw/openclaw.json
+  "agents": {
+    "defaults": {
+      // Point this to your clone or private fork.
+      "workspace": "~/Mini-fy",
+
+      // Keep the recurring bootstrap prefix lean.
+      "bootstrapMaxChars": 12000,
+      "bootstrapTotalMaxChars": 80000,
+
+      // Keep warm caches alive only when the agent actually benefits.
+      "heartbeat": {
+        "every": "30m",
+        "target": "none",
+        "lightContext": true,
+        "isolatedSession": true
+      },
+
+      // Trim stale tool-result context after cache TTL expiry.
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "5m",
+        "tools": {
+          "deny": ["browser", "canvas"]
+        }
+      },
+
+      // If your main model is smaller, use a stronger model just for compaction summaries.
+      "compaction": {
+        "model": "REPLACE_WITH_PROVIDER/MODEL"
+      },
+
+      // Useful when the provider supports prompt caching controls.
+      "params": {
+        "cacheRetention": "short"
+      }
+    }
+  }
+}

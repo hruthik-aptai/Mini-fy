@@ -1,0 +1,297 @@
+# Mini-fy
+
+Mini-fy is a public, portability-first OpenClaw workspace pack built to make agents faster, leaner, and more reliable without cutting away core capability.
+
+This repository is intentionally **not** a mirror of "the whole internet." That would be a bad OpenClaw workspace for three reasons:
+
+1. It would be legally messy.
+2. It would explode prompt size and reduce efficiency.
+3. Most external material is low-signal compared with a curated set of primary sources plus tight operating instructions.
+
+Instead, Mini-fy packages the things OpenClaw can actually ingest and use well:
+
+- Root workspace files that OpenClaw loads every session
+- A small skill pack for high-value workflows
+- Config snippets for cost, latency, memory, and safety tuning
+- A machine-readable source index
+- Public docs that point back to official sources
+
+The goal is simple: **increase shipped outcomes per token, per minute, and per context window**.
+
+## What This Repo Optimizes
+
+- Faster agent startup by keeping root instruction files small and purposeful
+- Better factual reliability by pushing the agent toward primary-source verification
+- Lower token waste by moving detailed process into skills and docs instead of bloating the session prefix
+- Better long-session behavior through pruning, compaction, heartbeat, and memory-search guidance
+- Safer operation by separating public template content from private OpenClaw state
+- Better iteration quality by making evals and verification a first-class part of prompt and workspace changes
+
+## What This Repo Does Not Do
+
+- It does not scrape or republish copyrighted docs wholesale
+- It does not ship secrets, auth state, transcripts, or `~/.openclaw/` internals
+- It does not assume one model vendor is always best
+- It does not "optimize" by stripping away functionality the agent still needs
+- It does not turn the workspace into a giant wiki that costs more to load than it helps
+
+## Why The Layout Looks Like This
+
+OpenClaw's own documentation says the workspace files that matter most are `AGENTS.md`, `SOUL.md`, `USER.md`, `IDENTITY.md`, `TOOLS.md`, `HEARTBEAT.md`, `MEMORY.md`, and `skills/`. Those are the surfaces the agent sees often, so Mini-fy keeps them sharp and compact.
+
+Everything that is useful but not worth paying for every turn lives outside that hot path:
+
+- `docs/` for human-readable explanation
+- `data/` for machine-readable source indexing
+- `config/` for merge-in examples
+- `scripts/` for installing into an existing workspace
+
+That separation is the core design choice of this repo.
+
+## Repo Map
+
+| Path | Purpose |
+| --- | --- |
+| `AGENTS.md` | Main operating instructions for the agent |
+| `SOUL.md` | Tone, persona, and behavioral boundaries |
+| `USER.md` | Default assumptions about the human collaborator |
+| `IDENTITY.md` | Minimal self-description for the workspace pack |
+| `TOOLS.md` | Local-tool template for machine-specific notes |
+| `HEARTBEAT.md` | Tiny low-cost checklist for heartbeat runs |
+| `BOOTSTRAP.md` | One-time setup ritual; delete after personalization |
+| `MEMORY.md` | Public-safe long-term reminders for this workspace |
+| `CONTRIBUTING.md` | Rules for keeping the repo lean, source-backed, and useful |
+| `SECURITY.md` | Public-repo security policy and secret-handling guidance |
+| `skills/` | Task-specific depth that should not live in the root prompt |
+| `config/` | Example `openclaw.json` snippets to merge into local config |
+| `docs/` | Detailed install notes, design rationale, and source notes |
+| `data/source-index.json` | Machine-readable map of official references used here |
+| `scripts/install.ps1` | Safe Windows installer for merging this into an existing workspace |
+| `scripts/install.sh` | Safe Unix-like installer for merging this into an existing workspace |
+
+## Quick Start
+
+You have two good ways to use Mini-fy.
+
+### Option A: Use It As A Fresh Workspace Template
+
+This is the cleanest approach if you want a dedicated OpenClaw workspace.
+
+```bash
+git clone https://github.com/hruthik-aptai/Mini-fy.git ~/Mini-fy
+```
+
+Point OpenClaw at the clone by merging the relevant snippet from `config/openclaw.efficient.example.jsonc` into `~/.openclaw/openclaw.json`, then run:
+
+```bash
+openclaw setup --workspace ~/Mini-fy
+openclaw skills list
+```
+
+Recommended next steps:
+
+1. Personalize `USER.md`, `TOOLS.md`, and `HEARTBEAT.md`
+2. Choose memory-search and model settings from `config/`
+3. Start a new session or restart the gateway so the skills load
+4. Delete `BOOTSTRAP.md` once setup is complete
+
+### Option B: Merge It Into An Existing Workspace
+
+If you already have a working OpenClaw workspace and want to layer Mini-fy on top:
+
+Windows PowerShell:
+
+```powershell
+.\scripts\install.ps1
+```
+
+Unix-like shell:
+
+```bash
+./scripts/install.sh
+```
+
+Both installers:
+
+- create timestamped backups of conflicting files or folders
+- copy Mini-fy's portable files into the target workspace
+- leave `~/.openclaw/` credentials and session state alone
+
+By default, the target is `~/.openclaw/workspace`.
+
+## Public Repo Safety Model
+
+OpenClaw's official docs recommend treating the real workspace as private memory. That advice is right. A **public** workspace repo should stay portable and non-sensitive.
+
+This repo is therefore designed as a **public template / shared baseline**, not as a place to commit your actual private memory.
+
+If you want to turn this into your real workspace:
+
+1. Prefer making a private fork.
+2. Keep daily logs under `memory/` ignored by git.
+3. Never commit `~/.openclaw/openclaw.json`, auth profiles, credentials, or session transcripts.
+4. Keep machine-specific secrets out of `TOOLS.md`.
+
+## The Core Operating Philosophy
+
+Mini-fy is opinionated about how to improve agent efficiency:
+
+### 1. Curate, Don't Hoard
+
+The best workspace is not the largest one. It is the one that exposes the highest-value instructions and references with the lowest token overhead.
+
+### 2. Stable Prefix, Deep On Demand
+
+Everything loaded every session should be short. Deeper process belongs in skills, docs, and structured data that the agent can read only when needed.
+
+### 3. Primary Sources Over Lore
+
+If a fact can drift, verify it against an official source. If a recommendation is expensive or risky, prefer vendor docs, standards, release notes, or source repos over forum hearsay.
+
+### 4. Efficiency Without Capability Loss
+
+Mini-fy avoids "optimizations" that are just disguised amputations. The target is better execution density, not less functionality.
+
+### 5. Eval-Driven Changes
+
+Prompt, skill, and config changes should be judged with concrete success criteria and regression checks, not vibe.
+
+### 6. Security Before Cleverness
+
+Treat plugins, MCP servers, third-party skills, and untrusted content as risk boundaries. Put access control, sandboxing, and approval discipline ahead of model improvisation.
+
+## Included Skills
+
+Mini-fy ships five focused skills instead of a giant noisy catalog:
+
+| Skill | What it is for |
+| --- | --- |
+| `latest_primary_sources` | Fresh facts, release notes, version drift, and "latest" research tasks |
+| `lean_context` | Long or noisy sessions where token/latency discipline matters |
+| `eval_flywheel` | Prompt, skill, config, or workflow changes that need repeatable validation |
+| `debug_trace` | Broken, flaky, slow, or confusing agent/tool behavior |
+| `workspace_curator` | Improving the workspace itself without bloating the root prompt |
+
+Each skill is concise on purpose. Trigger clarity matters more than clever wording.
+
+## Included Config Snippets
+
+The `config/` folder contains merge-in examples for common tuning patterns:
+
+- `openclaw.efficient.example.jsonc`
+  - lean bootstrap limits
+  - heartbeat keep-warm
+  - cache TTL pruning
+  - explicit compaction model
+  - baseline cache-retention guidance
+- `openclaw.heartbeat.example.jsonc`
+  - mixed-traffic heartbeat pattern
+  - disable warm-cache behavior for bursty notifier-style agents
+- `openclaw.memory.example.jsonc`
+  - explicit memory-search provider selection
+  - reminder to verify the memory index
+- `openclaw.secure-baseline.example.jsonc`
+  - workspace-only filesystem guardrails
+  - read-only sandbox example
+
+These are deliberately examples, not copy-paste gospel. Merge the parts that fit your OpenClaw version and deployment model.
+
+## How This Repo Tries To Reduce Cost And Latency
+
+Mini-fy bakes in several patterns pulled from official docs and generalized for a workspace:
+
+- Keep root files short so the session prefix stays cheap and cache-friendly
+- Put stable instructions before volatile task context
+- Use heartbeat only where warm caches actually help
+- Use cache-TTL pruning to avoid re-caching oversized stale tool output
+- Use compaction for long chats instead of carrying the full raw history forever
+- Use memory search for recall instead of stuffing everything into the live prompt
+- Prefer structured source indexes and targeted lookups over re-reading large prose blocks
+
+## Source Strategy
+
+Mini-fy is backed by official documentation from:
+
+- OpenClaw
+- OpenAI
+- Anthropic
+- Model Context Protocol
+
+Human-readable source notes live in `docs/SOURCES.md`.
+
+Machine-readable equivalents live in `data/source-index.json`.
+
+This matters because another agent can parse the JSON index while a human can audit the Markdown version quickly.
+
+## Recommended Workflow For Improving This Repo Over Time
+
+If you keep evolving Mini-fy, this loop works well:
+
+1. Add a new source only if it changes behavior, quality, safety, or cost in a meaningful way.
+2. Distill the lesson into the smallest useful workspace artifact.
+3. Decide whether it belongs in:
+   - root instructions
+   - a skill
+   - docs
+   - config
+   - structured data
+4. Keep the hot path lean.
+5. Validate the change with a small regression set or operational smoke test.
+6. Update `docs/SOURCES.md` and `data/source-index.json` when the repo's guidance changes.
+
+## Suggested Validation After Cloning
+
+Run the following after wiring Mini-fy into your environment:
+
+```bash
+openclaw skills list
+openclaw status
+openclaw memory status
+openclaw agent --message "What workspace files are loaded every session?"
+```
+
+You want to confirm:
+
+- the workspace points to the expected path
+- the bundled skills appear
+- memory search is healthy if you enabled it
+- the agent can describe the repo's structure accurately
+
+## Why The README Is Detailed But The Root Prompt Files Are Not
+
+This README is for humans and public GitHub visitors.
+
+The root workspace files are for a running agent that pays for every extra byte of recurring context.
+
+That is why the README is intentionally much more detailed than `AGENTS.md`, `SOUL.md`, or `USER.md`. The design is asymmetric on purpose.
+
+## Best Pairing With Real Usage
+
+The best practical setup is often:
+
+1. Keep this public repo as the clean portable baseline.
+2. Create a private fork or private sibling workspace for personal memory and secrets.
+3. Periodically cherry-pick useful public improvements back and forth.
+
+That gives you a strong public template without turning your real assistant memory into public Git history.
+
+## Official Sources Used
+
+The repo's current guidance was checked on **2026-04-09** against official sources. Start with:
+
+- [OpenClaw Agent Workspace](https://docs.openclaw.ai/concepts/agent-workspace)
+- [OpenClaw Skills](https://docs.openclaw.ai/tools/skills)
+- [OpenClaw Creating Skills](https://docs.openclaw.ai/tools/creating-skills)
+- [OpenClaw Session Pruning](https://docs.openclaw.ai/concepts/session-pruning)
+- [OpenClaw Compaction](https://docs.openclaw.ai/concepts/compaction)
+- [OpenClaw Security](https://docs.openclaw.ai/security)
+- [OpenAI Prompting Guide](https://platform.openai.com/docs/guides/prompting)
+- [OpenAI Evaluation Best Practices](https://platform.openai.com/docs/guides/evaluation-best-practices)
+- [Anthropic Claude 4 Prompt Best Practices](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/claude-4-best-practices)
+- [Model Context Protocol Specification](https://modelcontextprotocol.io/specification/2025-06-18)
+
+The fuller list is in [`docs/SOURCES.md`](./docs/SOURCES.md).
+
+## License
+
+MIT. See [`LICENSE`](./LICENSE).

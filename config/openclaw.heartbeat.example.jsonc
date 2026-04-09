@@ -1,0 +1,25 @@
+{
+  "agents": {
+    "defaults": {
+      // Main agent: keep the cache warm with light context.
+      "heartbeat": {
+        "every": "55m",
+        "target": "none",
+        "lightContext": true,
+        "isolatedSession": true
+      }
+    },
+    "list": [
+      {
+        "id": "alerts",
+        // Bursty notifier-style agents often do not benefit from keep-warm traffic.
+        "heartbeat": {
+          "every": "0m"
+        },
+        "params": {
+          "cacheRetention": "none"
+        }
+      }
+    ]
+  }
+}

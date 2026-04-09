@@ -1,0 +1,14 @@
+{
+  "agents": {
+    "defaults": {
+      "memorySearch": {
+        // Use "openai", "gemini", "local", "ollama", etc.
+        "provider": "openai"
+      }
+    }
+  }
+
+  // After enabling:
+  // openclaw memory status
+  // openclaw memory index --force
+}

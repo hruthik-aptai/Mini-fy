@@ -1,0 +1,20 @@
+{
+  "agents": {
+    "defaults": {
+      // Example read-only posture for review-style or research agents.
+      "sandbox": {
+        "workspaceAccess": "ro"
+      }
+    }
+  },
+  "tools": {
+    "exec": {
+      "applyPatch": {
+        "workspaceOnly": true
+      }
+    },
+    "fs": {
+      "workspaceOnly": true
+    }
+  }
+}

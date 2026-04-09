@@ -1,0 +1,178 @@
+[
+  {
+    "id": "openclaw-agent-workspace",
+    "category": "openclaw",
+    "title": "Agent Workspace",
+    "url": "https://docs.openclaw.ai/concepts/agent-workspace",
+    "why": "Defines the workspace file map, bootstrap behavior, and what should stay out of git.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openclaw-skills",
+    "category": "openclaw",
+    "title": "Skills",
+    "url": "https://docs.openclaw.ai/tools/skills",
+    "why": "Defines skill loading, precedence, and security notes.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openclaw-creating-skills",
+    "category": "openclaw",
+    "title": "Creating Skills",
+    "url": "https://docs.openclaw.ai/tools/creating-skills",
+    "why": "Confirms skill format, frontmatter, and best-practice guidance.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openclaw-compaction",
+    "category": "openclaw",
+    "title": "Compaction",
+    "url": "https://docs.openclaw.ai/concepts/compaction",
+    "why": "Explains long-session summarization and compaction model settings.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openclaw-session-pruning",
+    "category": "openclaw",
+    "title": "Session Pruning",
+    "url": "https://docs.openclaw.ai/concepts/session-pruning",
+    "why": "Explains cache-TTL pruning and how tool-result trimming works.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openclaw-prompt-caching",
+    "category": "openclaw",
+    "title": "Prompt Caching",
+    "url": "https://docs.openclaw.ai/reference/prompt-caching",
+    "why": "Supports cache-retention and heartbeat keep-warm guidance.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openclaw-memory-search",
+    "category": "openclaw",
+    "title": "Memory Search",
+    "url": "https://docs.openclaw.ai/concepts/memory-search",
+    "why": "Explains retrieval-based memory instead of prompt hoarding.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openclaw-memory-builtin",
+    "category": "openclaw",
+    "title": "Built-in Memory Engine",
+    "url": "https://docs.openclaw.ai/concepts/memory-builtin",
+    "why": "Clarifies indexing of MEMORY.md and memory logs.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openclaw-security",
+    "category": "openclaw",
+    "title": "Security",
+    "url": "https://docs.openclaw.ai/security",
+    "why": "Grounds workspace-only filesystem guardrails and read-only posture.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openai-prompting",
+    "category": "openai",
+    "title": "Prompting",
+    "url": "https://platform.openai.com/docs/guides/prompting",
+    "why": "Supports reusable prompt structure and concise task framing.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openai-eval-best-practices",
+    "category": "openai",
+    "title": "Evaluation Best Practices",
+    "url": "https://platform.openai.com/docs/guides/evaluation-best-practices",
+    "why": "Supports eval-driven iteration over prompt or workflow changes.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openai-agent-evals",
+    "category": "openai",
+    "title": "Agent Evals",
+    "url": "https://platform.openai.com/docs/guides/agent-evals",
+    "why": "Supports thinking about workflow-level quality, not only single outputs.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "openai-safety-building-agents",
+    "category": "openai",
+    "title": "Safety in Building Agents",
+    "url": "https://platform.openai.com/docs/guides/agent-builder-safety",
+    "why": "Supports guardrails, approvals, and safer handling of untrusted inputs.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "anthropic-clear-direct-detailed",
+    "category": "anthropic",
+    "title": "Be Clear, Direct, and Detailed",
+    "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/be-clear-and-direct",
+    "why": "Supports explicit instructions and sequential task structure.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "anthropic-claude4-best-practices",
+    "category": "anthropic",
+    "title": "Claude 4 Prompt Engineering Best Practices",
+    "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/claude-4-best-practices",
+    "why": "Supports explicit task framing and better instruction following.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "anthropic-success-criteria",
+    "category": "anthropic",
+    "title": "Define Your Success Criteria",
+    "url": "https://docs.anthropic.com/claude/docs/empirical-performance-evaluations",
+    "why": "Supports measurable optimization instead of vague prompt tuning.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "anthropic-tool-use",
+    "category": "anthropic",
+    "title": "How to Implement Tool Use",
+    "url": "https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/implement-tool-use",
+    "why": "Reinforces the need for explicit tool and skill descriptions.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "anthropic-reduce-prompt-leak",
+    "category": "anthropic",
+    "title": "Reduce Prompt Leak",
+    "url": "https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-prompt-leak",
+    "why": "Supports avoiding overly complex prompt hardening that harms performance.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "mcp-spec-2025-06-18",
+    "category": "mcp",
+    "title": "Specification 2025-06-18",
+    "url": "https://modelcontextprotocol.io/specification/2025-06-18",
+    "why": "Defines the authoritative MCP capabilities and security expectations.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "mcp-versioning",
+    "category": "mcp",
+    "title": "Versioning",
+    "url": "https://modelcontextprotocol.io/specification/",
+    "why": "Confirms the current protocol version and date-based version identifiers.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "mcp-architecture",
+    "category": "mcp",
+    "title": "Architecture Overview",
+    "url": "https://modelcontextprotocol.io/docs/learn/architecture",
+    "why": "Clarifies the host, client, and server roles in MCP systems.",
+    "checked_at": "2026-04-09"
+  },
+  {
+    "id": "mcp-server-concepts",
+    "category": "mcp",
+    "title": "Server Concepts",
+    "url": "https://modelcontextprotocol.io/docs/learn/server-concepts",
+    "why": "Explains the difference between tools, resources, and prompt templates.",
+    "checked_at": "2026-04-09"
+  }
+]
