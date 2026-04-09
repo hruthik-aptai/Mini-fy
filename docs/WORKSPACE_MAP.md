@@ -12,6 +12,7 @@ This page translates OpenClaw's workspace model into how Mini-fy uses it.
 | `IDENTITY.md` | Loaded every session | agent name and self-concept | minimal identity so the workspace is legible without wasting tokens |
 | `TOOLS.md` | Loaded every session | local machine/tool notes | public-safe template only; real local notes should stay non-sensitive |
 | `HEARTBEAT.md` | Used by heartbeat runs | tiny background checklist | a four-line checklist designed to stay cheap |
+| `BOOT.md` | optional startup checklist | what the agent should check on gateway start | explicit install vs verify triage for Mini-fy |
 | `BOOTSTRAP.md` | one-time setup aid | initial ritual and reminders | tells the user what to personalize, then should be deleted |
 | `MEMORY.md` | optional long-term recall | durable high-value reminders | public-safe reminders about how this repo should stay structured |
 

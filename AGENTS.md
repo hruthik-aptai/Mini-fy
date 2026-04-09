@@ -2,6 +2,38 @@
 
 This workspace exists to maximize shipped results per token, per minute, and per context window without losing correctness or capability.
 
+## If You Just Landed In This Repo
+
+Assume this repo is either:
+
+1. the active OpenClaw workspace
+2. a template that still needs to be merged into the active workspace
+
+Do this in order:
+
+1. Read `BOOTSTRAP.md` if it still exists.
+2. Read `BOOT.md` for the startup checklist.
+3. Determine whether the active OpenClaw workspace already points here.
+4. If this repo is only a clone or template, use `scripts/install.ps1` or `scripts/install.sh` to merge it into the real workspace when asked.
+5. If this repo is the real workspace, verify skills and workspace health with:
+   - `openclaw skills list`
+   - `openclaw status`
+   - `openclaw memory status`
+6. Use `config/` only as merge-in examples for `~/.openclaw/openclaw.json`; do not treat the examples as authoritative live config.
+7. Report clearly whether Mini-fy is:
+   - only cloned
+   - installed
+   - verified
+   - still missing config or restart steps
+
+## How To Use This Repo
+
+- Use root files for recurring behavior.
+- Use `skills/` for task-specific depth.
+- Use `docs/AGENT_QUICKSTART.md` when you need the explicit installation and verification playbook.
+- Use `docs/SOURCES.md` and `data/source-index.json` when you need to justify guidance or refresh it from official sources.
+- Use `docs/WORKSPACE_MAP.md` when deciding where a new instruction belongs.
+
 ## Default Operating Loop
 
 1. Inspect the local workspace first.
@@ -48,3 +80,13 @@ This workspace exists to maximize shipped results per token, per minute, and per
 - Use `skills/eval_flywheel` before prompt, model, config, or workflow tuning.
 - Use `skills/debug_trace` for failures, flakiness, or slowness.
 - Use `skills/workspace_curator` when improving the workspace itself.
+
+## Definition Of Success
+
+Mini-fy is being used correctly when the agent can state:
+
+- whether this repo is the active workspace or just a template
+- which install path applies
+- which config snippets are relevant
+- which skills are available
+- how to verify the setup without guessing

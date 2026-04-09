@@ -58,6 +58,7 @@ That separation is the core design choice of this repo.
 | `IDENTITY.md` | Minimal self-description for the workspace pack |
 | `TOOLS.md` | Local-tool template for machine-specific notes |
 | `HEARTBEAT.md` | Tiny low-cost checklist for heartbeat runs |
+| `BOOT.md` | Always-on startup checklist for agents entering the workspace |
 | `BOOTSTRAP.md` | One-time setup ritual; delete after personalization |
 | `MEMORY.md` | Public-safe long-term reminders for this workspace |
 | `CONTRIBUTING.md` | Rules for keeping the repo lean, source-backed, and useful |
@@ -68,6 +69,19 @@ That separation is the core design choice of this repo.
 | `data/source-index.json` | Machine-readable map of official references used here |
 | `scripts/install.ps1` | Safe Windows installer for merging this into an existing workspace |
 | `scripts/install.sh` | Safe Unix-like installer for merging this into an existing workspace |
+
+## If You Are The Agent
+
+If an OpenClaw agent opens this repo and needs to know what to do next, the intended order is:
+
+1. Read `AGENTS.md`
+2. Read `BOOT.md`
+3. Read `BOOTSTRAP.md` if it still exists
+4. Use `docs/AGENT_QUICKSTART.md` for the exact install vs verify workflow
+5. Confirm whether this repo is the active workspace or only a cloned template
+6. Verify with `openclaw skills list`, `openclaw status`, and `openclaw memory status`
+
+That flow is now encoded directly into the root workspace files so the next agent has less ambiguity.
 
 ## Quick Start
 
