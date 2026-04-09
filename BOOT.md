@@ -9,6 +9,7 @@ Run this checklist on startup or first contact with the workspace:
    - `openclaw skills list`
    - `openclaw status`
    - `openclaw memory status`
+   - `openclaw sandbox explain`
 5. If the workload is clearly coding, research, or ops heavy, consider applying the matching profile.
 6. If Mini-fy is not yet installed into the real workspace, recommend or run:
    - `scripts/install.ps1` on Windows
@@ -19,3 +20,4 @@ Run this checklist on startup or first contact with the workspace:
    - installed and verified
 
 Keep the report short. Do not dump long docs unless asked.
+Prefer exact terminal commands over generic UI instructions.

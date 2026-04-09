@@ -1,6 +1,6 @@
 # Mini-fy
 
-Mini-fy is a public, portability-first OpenClaw workspace pack built to make agents faster, leaner, and more reliable without cutting away core capability.
+Mini-fy is a public, portability-first **OpenClaw terminal / CLI workspace pack** built to make agents faster, leaner, and more reliable without cutting away core capability.
 
 This repository is intentionally **not** a mirror of "the whole internet." That would be a bad OpenClaw workspace for three reasons:
 
@@ -48,6 +48,17 @@ Everything that is useful but not worth paying for every turn lives outside that
 
 That separation is the core design choice of this repo.
 
+## OpenClaw CLI Focus
+
+Mini-fy is explicitly designed for **OpenClaw in a terminal**.
+
+That means:
+
+- the primary interface is the `openclaw` command
+- setup, verification, and operations should be expressed as commands
+- terminal-friendly output beats GUI-oriented explanation
+- this repo should help an agent operate correctly in CLI-first workflows
+
 ## Repo Map
 
 | Path | Purpose |
@@ -67,18 +78,26 @@ That separation is the core design choice of this repo.
 | `config/` | Example `openclaw.json` snippets to merge into local config |
 | `profiles/` | Workload-specific packs for coding, research, and ops |
 | `docs/` | Detailed install notes, design rationale, and source notes |
+| `tests/` | Unit tests for the core Mini-fy tooling |
+| `data/agent-manifest.json` | Machine-readable map of startup order, states, scripts, profiles, and verification commands |
 | `data/source-index.json` | Machine-readable map of official references used here |
 | `data/evals/` | Eval cases for core behavior plus profile-specific checks |
 | `scripts/install.ps1` | Safe Windows installer for merging this into an existing workspace |
 | `scripts/install.sh` | Safe Unix-like installer for merging this into an existing workspace |
+| `scripts/bootstrap_workspace.ps1` | One-command Windows bootstrap for fresh or merge activation |
+| `scripts/bootstrap_workspace.sh` | One-command Unix-like bootstrap for fresh or merge activation |
 | `scripts/doctor.ps1` | Windows verification script for active-workspace detection and OpenClaw health checks |
 | `scripts/doctor.sh` | Unix-like verification script for active-workspace detection and OpenClaw health checks |
+| `scripts/openclaw_snapshot.ps1` | Windows OpenClaw CLI status snapshot |
+| `scripts/openclaw_snapshot.sh` | Unix-like OpenClaw CLI status snapshot |
 | `scripts/patch_openclaw_config.ps1` | Safe Windows wrapper for merging config snippets into `~/.openclaw/openclaw.json` |
 | `scripts/patch_openclaw_config.sh` | Safe Unix-like wrapper for merging config snippets into `~/.openclaw/openclaw.json` |
 | `scripts/apply_profile.ps1` | Safe Windows profile-application helper |
 | `scripts/apply_profile.sh` | Safe Unix-like profile-application helper |
 | `scripts/eval.ps1` | Windows wrapper for Mini-fy eval runs |
 | `scripts/eval.sh` | Unix-like wrapper for Mini-fy eval runs |
+| `scripts/selftest.ps1` | Windows repo self-test runner |
+| `scripts/selftest.sh` | Unix-like repo self-test runner |
 
 ## If You Are The Agent
 
@@ -91,6 +110,7 @@ If an OpenClaw agent opens this repo and needs to know what to do next, the inte
 5. Confirm whether this repo is the active workspace or only a cloned template
 6. Run `scripts/doctor.ps1` or `scripts/doctor.sh`
 7. Verify with `openclaw skills list`, `openclaw status`, and `openclaw memory status` when OpenClaw is available
+8. Prefer the terminal-first guidance in `docs/CLI.md`
 
 That flow is now encoded directly into the root workspace files so the next agent has less ambiguity.
 
@@ -147,6 +167,7 @@ In this state, run:
 openclaw skills list
 openclaw status
 openclaw memory status
+openclaw sandbox explain
 ```
 
 Then report one of these exact outcomes:
@@ -238,6 +259,7 @@ Apply and use:
 Read:
 
 - `docs/AGENT_QUICKSTART.md`
+- `docs/CLI.md`
 - `docs/PROFILES.md`
 - `docs/INSTALL.md`
 - `docs/VERIFICATION.md`
@@ -258,6 +280,8 @@ Read:
 ## Quick Start
 
 You have two good ways to use Mini-fy.
+
+If you want the shortest activation path, you can now use the bootstrap scripts described in [`docs/AUTOMATION.md`](./docs/AUTOMATION.md).
 
 ### Option A: Use It As A Fresh Workspace Template
 
@@ -347,6 +371,47 @@ You can also merge a profile snippet directly:
 ./scripts/patch_openclaw_config.sh --profile coding
 ```
 
+## One-Command Bootstrap
+
+Mini-fy now includes bootstrap helpers that can install, patch config, optionally apply a profile, and run the doctor in one flow.
+
+### Windows
+
+```powershell
+.\scripts\bootstrap_workspace.ps1 -Mode fresh -Profile coding
+```
+
+### Unix-like
+
+```bash
+./scripts/bootstrap_workspace.sh --mode fresh --profile coding
+```
+
+Read [`docs/AUTOMATION.md`](./docs/AUTOMATION.md) for the full flow.
+
+## OpenClaw CLI Snapshot
+
+Mini-fy now includes a quick OpenClaw CLI snapshot command:
+
+### Windows
+
+```powershell
+.\scripts\openclaw_snapshot.ps1
+```
+
+### Unix-like
+
+```bash
+./scripts/openclaw_snapshot.sh
+```
+
+That runs a compact terminal-oriented check of:
+
+- `openclaw status`
+- `openclaw skills list`
+- `openclaw memory status`
+- `openclaw sandbox explain`
+
 ## Evals And Benchmarks
 
 Mini-fy now includes a lightweight eval layer:
@@ -364,6 +429,24 @@ Use the wrappers:
 Then compare before and after reports with `scripts/compare_eval_reports.py`.
 
 Read [`docs/EVALS.md`](./docs/EVALS.md) for the workflow.
+
+## Repo Self-Test
+
+Mini-fy now ships a repo-level self-test:
+
+### Windows
+
+```powershell
+.\scripts\selftest.ps1
+```
+
+### Unix-like
+
+```bash
+./scripts/selftest.sh
+```
+
+That checks script parsing, Python compilation, unit tests, config patching, eval validation, and doctor execution.
 
 ## CI
 

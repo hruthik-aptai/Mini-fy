@@ -15,6 +15,8 @@ OpenClaw's official docs recommend treating the real workspace as private memory
 - a template you fork privately
 - a portable pack you selectively merge into your real workspace
 
+If you want the shortest path, use the bootstrap scripts from `docs/AUTOMATION.md` instead of running each step manually.
+
 Do **not** commit the following into this public repo:
 
 - `~/.openclaw/openclaw.json`

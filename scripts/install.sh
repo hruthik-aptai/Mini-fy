@@ -25,6 +25,7 @@ items=(
   "config"
   "profiles"
   "scripts"
+  "tests"
   "skills"
 )
 

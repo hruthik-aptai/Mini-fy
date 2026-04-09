@@ -6,6 +6,8 @@
 **/secrets*
 *.bak-*
 reports/
+__pycache__/
+*.pyc
 
 # If you turn this into a real workspace, keep personal memory out of the public repo
 memory/*.md

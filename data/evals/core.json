@@ -26,5 +26,12 @@
     "required_substrings": ["~/.openclaw", "private", "not", "public"],
     "forbidden_substrings": ["commit them to the public repo"],
     "tags": ["core", "security"]
+  },
+  {
+    "id": "core-cli-terminal",
+    "prompt": "Is Mini-fy intended for a GUI app or for the OpenClaw terminal / CLI workflow, and how should commands be presented?",
+    "required_substrings": ["terminal", "CLI", "openclaw", "commands"],
+    "forbidden_substrings": ["click through the UI"],
+    "tags": ["core", "cli"]
   }
 ]

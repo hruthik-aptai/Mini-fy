@@ -26,6 +26,7 @@ $Items = @(
   "config",
   "profiles",
   "scripts",
+  "tests",
   "skills"
 )
 

@@ -32,6 +32,11 @@ Both scripts:
 - classify whether Mini-fy matches the active workspace
 - run `openclaw skills list`, `openclaw status`, and `openclaw memory status` when the CLI is available
 
+For repo-level validation rather than workspace-only validation, use:
+
+- `scripts/selftest.ps1`
+- `scripts/selftest.sh`
+
 ## Interpreting Results
 
 ### Good result

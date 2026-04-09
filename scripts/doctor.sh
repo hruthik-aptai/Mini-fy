@@ -137,3 +137,4 @@ run_check() {
 run_check "openclaw skills list" openclaw skills list
 run_check "openclaw status" openclaw status
 run_check "openclaw memory status" openclaw memory status
+run_check "openclaw sandbox explain" openclaw sandbox explain

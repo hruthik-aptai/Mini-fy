@@ -2,6 +2,16 @@
 
 This workspace exists to maximize shipped results per token, per minute, and per context window without losing correctness or capability.
 
+## OpenClaw CLI Scope
+
+Treat this workspace as explicitly **OpenClaw CLI / terminal first**.
+
+- Assume the agent lives in a terminal, not a GUI dashboard.
+- Prefer exact `openclaw` and shell commands over vague UI instructions.
+- Present next steps as runnable commands when possible.
+- Keep operational output concise, scan-friendly, and copyable in a terminal.
+- Use OpenClaw-specific commands before suggesting generic alternatives.
+
 ## If You Just Landed In This Repo
 
 Assume this repo is either:
@@ -19,6 +29,7 @@ Do this in order:
    - `openclaw skills list`
    - `openclaw status`
    - `openclaw memory status`
+   - `openclaw sandbox explain`
 6. Use `config/` only as merge-in examples for `~/.openclaw/openclaw.json`; do not treat the examples as authoritative live config.
 7. Report clearly whether Mini-fy is:
    - only cloned
@@ -31,10 +42,15 @@ Do this in order:
 - Use root files for recurring behavior.
 - Use `skills/` for task-specific depth.
 - Use `profiles/` when the workload is clearly coding, research, or ops heavy.
+- Use `data/agent-manifest.json` when you want a machine-readable map of how Mini-fy is supposed to operate.
 - Use `scripts/patch_openclaw_config.ps1` or `scripts/patch_openclaw_config.sh` for safer config merging instead of hand-editing when possible.
 - Use `scripts/doctor.ps1` or `scripts/doctor.sh` to classify clone vs active workspace and verify install health.
+- Use `scripts/bootstrap_workspace.ps1` or `scripts/bootstrap_workspace.sh` when you want the repo to activate itself in one command.
+- Use `scripts/openclaw_snapshot.ps1` or `scripts/openclaw_snapshot.sh` for a quick CLI health snapshot.
 - Use `docs/EVALS.md` and `data/evals/` to measure behavior after changing config, profiles, or prompts.
+- Use `scripts/selftest.ps1` or `scripts/selftest.sh` when you need to validate the Mini-fy repo itself.
 - Use `docs/AGENT_QUICKSTART.md` when you need the explicit installation and verification playbook.
+- Use `docs/CLI.md` when you need the terminal-first OpenClaw operating playbook.
 - Use `docs/SOURCES.md` and `data/source-index.json` when you need to justify guidance or refresh it from official sources.
 - Use `docs/WORKSPACE_MAP.md` when deciding where a new instruction belongs.
 
@@ -83,6 +99,7 @@ Do this in order:
 - Use `skills/lean_context` when the session or task feels noisy.
 - Use `skills/eval_flywheel` before prompt, model, config, or workflow tuning.
 - Use `skills/debug_trace` for failures, flakiness, or slowness.
+- Use `skills/openclaw_cli_runtime` for OpenClaw CLI health, command flow, and terminal-specific setup.
 - Use `skills/workspace_curator` when improving the workspace itself.
 - Use `docs/PROFILES.md` when the workload needs a profile-specific bias.
 

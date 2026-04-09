@@ -10,7 +10,7 @@ This file is for an OpenClaw agent that has just entered the Mini-fy repo and ne
 
 ## What This Repo Is
 
-Mini-fy is a public OpenClaw workspace pack. It is not guaranteed to already be the active workspace just because it was cloned.
+Mini-fy is a public OpenClaw **terminal / CLI** workspace pack. It is not guaranteed to already be the active workspace just because it was cloned.
 
 There are two common states:
 
@@ -81,9 +81,11 @@ Use it directly, but still verify that the environment is healthy:
 
 ```bash
 ./scripts/doctor.sh
+./scripts/openclaw_snapshot.sh
 openclaw skills list
 openclaw status
 openclaw memory status
+openclaw sandbox explain
 ```
 
 If any of these fail, switch to `skills/debug_trace`.
@@ -119,6 +121,7 @@ Mini-fy should be considered correctly installed only if you can answer all of t
 
 ### Use the docs when you need explicit guidance
 
+- `docs/CLI.md` for terminal-first OpenClaw operating guidance
 - `docs/INSTALL.md` for human-facing installation detail
 - `docs/PROFILES.md` for workload-specific profile guidance
 - `docs/VERIFICATION.md` for doctor-script and verification guidance

@@ -1,0 +1,123 @@
+{
+  "name": "Mini-fy",
+  "checked_at": "2026-04-09",
+  "purpose": "A portability-first OpenClaw workspace pack tuned for efficiency, source discipline, verification, and workload-specific profiles.",
+  "runtime": {
+    "platform": "OpenClaw CLI",
+    "interface": "terminal",
+    "terminal_first": true
+  },
+  "first_read_order": [
+    "AGENTS.md",
+    "BOOT.md",
+    "BOOTSTRAP.md",
+    "docs/AGENT_QUICKSTART.md",
+    "docs/VERIFICATION.md",
+    "docs/CLI.md"
+  ],
+  "state_model": {
+    "template_only": {
+      "meaning": "The repo is cloned but may not be the configured active workspace.",
+      "next_steps": [
+        "Run scripts/install.ps1 or scripts/install.sh to merge Mini-fy into the real workspace.",
+        "Patch ~/.openclaw/openclaw.json with scripts/patch_openclaw_config.ps1 or scripts/patch_openclaw_config.sh.",
+        "Restart OpenClaw or start a new session.",
+        "Run scripts/doctor.ps1 or scripts/doctor.sh."
+      ]
+    },
+    "active_workspace": {
+      "meaning": "The configured OpenClaw workspace path matches this repo or the installed Mini-fy copy.",
+      "next_steps": [
+        "Run scripts/doctor.ps1 or scripts/doctor.sh.",
+        "Apply a workload profile if needed.",
+        "Run evals after any material change."
+      ]
+    },
+    "installed_not_verified": {
+      "meaning": "Mini-fy is installed but the active workspace path, skills, or OpenClaw health have not yet been confirmed.",
+      "next_steps": [
+        "Run scripts/doctor.ps1 or scripts/doctor.sh.",
+        "Run openclaw skills list, openclaw status, and openclaw memory status if available."
+      ]
+    }
+  },
+  "scripts": [
+    {
+      "path": "scripts/install.ps1",
+      "path_unix_pair": "scripts/install.sh",
+      "purpose": "Merge Mini-fy into an existing workspace with backups."
+    },
+    {
+      "path": "scripts/bootstrap_workspace.ps1",
+      "path_unix_pair": "scripts/bootstrap_workspace.sh",
+      "purpose": "One-command activation flow for fresh or merge mode with optional profile and doctor run."
+    },
+    {
+      "path": "scripts/patch_openclaw_config.ps1",
+      "path_unix_pair": "scripts/patch_openclaw_config.sh",
+      "purpose": "Safely merge Mini-fy config snippets into ~/.openclaw/openclaw.json."
+    },
+    {
+      "path": "scripts/apply_profile.ps1",
+      "path_unix_pair": "scripts/apply_profile.sh",
+      "purpose": "Append profile guidance and install profile-specific skills."
+    },
+    {
+      "path": "scripts/openclaw_snapshot.ps1",
+      "path_unix_pair": "scripts/openclaw_snapshot.sh",
+      "purpose": "Print a concise OpenClaw CLI health snapshot from the terminal."
+    },
+    {
+      "path": "scripts/doctor.ps1",
+      "path_unix_pair": "scripts/doctor.sh",
+      "purpose": "Verify workspace completeness, active-workspace status, active profiles, and OpenClaw command health."
+    },
+    {
+      "path": "scripts/eval.ps1",
+      "path_unix_pair": "scripts/eval.sh",
+      "purpose": "Run Mini-fy eval sets or validate them in skip-run mode."
+    },
+    {
+      "path": "scripts/selftest.ps1",
+      "path_unix_pair": "scripts/selftest.sh",
+      "purpose": "Run local parser, script, and eval validation checks for the repo itself."
+    }
+  ],
+  "profiles": [
+    {
+      "id": "coding",
+      "docs": "profiles/coding/README.md",
+      "skill": "profiles/coding/skills/code_delivery_guard/SKILL.md",
+      "evals": "data/evals/coding.json"
+    },
+    {
+      "id": "research",
+      "docs": "profiles/research/README.md",
+      "skill": "profiles/research/skills/source_matrix/SKILL.md",
+      "evals": "data/evals/research.json"
+    },
+    {
+      "id": "ops",
+      "docs": "profiles/ops/README.md",
+      "skill": "profiles/ops/skills/change_guard/SKILL.md",
+      "evals": "data/evals/ops.json"
+    }
+  ],
+  "verification": {
+    "doctor": [
+      "scripts/doctor.ps1",
+      "scripts/doctor.sh"
+    ],
+    "snapshot": [
+      "scripts/openclaw_snapshot.ps1",
+      "scripts/openclaw_snapshot.sh"
+    ],
+    "openclaw_commands": [
+      "openclaw skills list",
+      "openclaw status",
+      "openclaw memory status",
+      "openclaw sandbox explain",
+      "openclaw agent --message \"What workspace files are loaded every session?\""
+    ]
+  }
+}

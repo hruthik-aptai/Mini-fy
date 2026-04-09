@@ -23,12 +23,18 @@ jobs:
           bash -n scripts/patch_openclaw_config.sh
           bash -n scripts/apply_profile.sh
           bash -n scripts/eval.sh
+          bash -n scripts/openclaw_snapshot.sh
+          bash -n scripts/bootstrap_workspace.sh
+          bash -n scripts/selftest.sh
 
       - name: Compile Python scripts
         run: |
           python -m py_compile scripts/patch_openclaw_config.py
           python -m py_compile scripts/eval_suite.py
           python -m py_compile scripts/compare_eval_reports.py
+
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -p "test_*.py"
 
       - name: Run doctor
         run: bash scripts/doctor.sh "$PWD"
@@ -38,6 +44,14 @@ jobs:
 
       - name: Apply coding profile
         run: bash scripts/apply_profile.sh coding "${RUNNER_TEMP}/mini-fy-workspace"
+
+      - name: Run bootstrap flow
+        run: |
+          bash scripts/bootstrap_workspace.sh \
+            --mode merge \
+            --target "${RUNNER_TEMP}/mini-fy-bootstrap" \
+            --config "${RUNNER_TEMP}/bootstrap-openclaw.json" \
+            --profile coding
 
       - name: Merge config snippets
         run: |
@@ -56,6 +70,9 @@ jobs:
 
       - name: Compare eval report with itself
         run: python scripts/compare_eval_reports.py "${RUNNER_TEMP}/eval-report.json" "${RUNNER_TEMP}/eval-report.json"
+
+      - name: Run selftest
+        run: bash scripts/selftest.sh
 
   windows:
     runs-on: windows-latest
@@ -82,6 +99,10 @@ jobs:
           python -m py_compile scripts/eval_suite.py
           python -m py_compile scripts/compare_eval_reports.py
 
+      - name: Run unit tests
+        shell: pwsh
+        run: python -m unittest discover -s tests -p "test_*.py"
+
       - name: Run doctor
         shell: pwsh
         run: ./scripts/doctor.ps1 -Workspace . -SkipOpenClawChecks
@@ -97,6 +118,13 @@ jobs:
         run: |
           $target = Join-Path $env:RUNNER_TEMP "mini-fy-workspace"
           ./scripts/apply_profile.ps1 -Profile coding -Target $target
+
+      - name: Run bootstrap flow
+        shell: pwsh
+        run: |
+          $target = Join-Path $env:RUNNER_TEMP "mini-fy-bootstrap"
+          $config = Join-Path $env:RUNNER_TEMP "bootstrap-openclaw.json"
+          ./scripts/bootstrap_workspace.ps1 -Mode merge -Target $target -Config $config -Profile coding
 
       - name: Merge config snippets
         shell: pwsh
@@ -114,3 +142,7 @@ jobs:
           $report = Join-Path $env:RUNNER_TEMP "eval-report.json"
           python scripts/eval_suite.py --cases data/evals/core.json data/evals/coding.json data/evals/research.json data/evals/ops.json --skip-run --output $report
           python scripts/compare_eval_reports.py $report $report
+
+      - name: Run selftest
+        shell: pwsh
+        run: ./scripts/selftest.ps1

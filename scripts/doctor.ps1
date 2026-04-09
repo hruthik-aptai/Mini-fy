@@ -160,7 +160,8 @@ if (-not $OpenClaw) {
 $Commands = @(
   @{ Label = "openclaw skills list"; Args = @("skills", "list") },
   @{ Label = "openclaw status"; Args = @("status") },
-  @{ Label = "openclaw memory status"; Args = @("memory", "status") }
+  @{ Label = "openclaw memory status"; Args = @("memory", "status") },
+  @{ Label = "openclaw sandbox explain"; Args = @("sandbox", "explain") }
 )
 
 foreach ($CommandInfo in $Commands) {
