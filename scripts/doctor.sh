@@ -109,7 +109,7 @@ skill_count="$(find "${WORKSPACE_PATH}/skills" -name SKILL.md -type f 2>/dev/nul
 print_check "INFO" "Detected ${skill_count} Mini-fy skill files."
 
 if [ -f "${WORKSPACE_PATH}/AGENTS.md" ]; then
-  profiles="$(grep -o 'MINI-FY PROFILE:[^ ]\+ START' "${WORKSPACE_PATH}/AGENTS.md" 2>/dev/null | sed 's/MINI-FY PROFILE://; s/ START//' | sort -u | tr '\n' ',' | sed 's/,$//')"
+  profiles="$( (grep -o 'MINI-FY PROFILE:[^ ]\+ START' "${WORKSPACE_PATH}/AGENTS.md" 2>/dev/null || true) | sed 's/MINI-FY PROFILE://; s/ START//' | sort -u | tr '\n' ',' | sed 's/,$//')"
   if [ -n "$profiles" ]; then
     print_check "INFO" "Active Mini-fy profiles: ${profiles}"
   fi

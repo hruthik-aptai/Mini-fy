@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   ubuntu:
     runs-on: ubuntu-latest
@@ -132,8 +135,7 @@ jobs:
           $config = Join-Path $env:RUNNER_TEMP "openclaw.json"
           ./scripts/patch_openclaw_config.ps1 `
             -Config $config `
-            -Snippet config/openclaw.secure-baseline.example.jsonc `
-            -Snippet config/openclaw.efficient.example.jsonc `
+            -Snippet @("config/openclaw.secure-baseline.example.jsonc", "config/openclaw.efficient.example.jsonc") `
             -Profile coding
 
       - name: Validate eval definitions

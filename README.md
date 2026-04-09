@@ -356,7 +356,7 @@ Mini-fy now includes safe config patchers so you do not need to hand-merge every
 ### Windows
 
 ```powershell
-.\scripts\patch_openclaw_config.ps1 -Snippet config/openclaw.secure-baseline.example.jsonc -Snippet config/openclaw.efficient.example.jsonc
+.\scripts\patch_openclaw_config.ps1 -Snippet @("config/openclaw.secure-baseline.example.jsonc", "config/openclaw.efficient.example.jsonc")
 ```
 
 ### Unix-like
