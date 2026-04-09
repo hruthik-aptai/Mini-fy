@@ -69,13 +69,15 @@ Custom target:
 
 1. Merge the relevant config snippets from `config/` into `~/.openclaw/openclaw.json`.
 2. Start a new session or restart the gateway.
-3. Run the verification commands below.
+3. Run `scripts/doctor.ps1` or `scripts/doctor.sh`.
+4. Run the verification commands below.
 
 ## If This Repo Is Already The Active Workspace
 
 Use it directly, but still verify that the environment is healthy:
 
 ```bash
+./scripts/doctor.sh
 openclaw skills list
 openclaw status
 openclaw memory status
@@ -115,6 +117,7 @@ Mini-fy should be considered correctly installed only if you can answer all of t
 ### Use the docs when you need explicit guidance
 
 - `docs/INSTALL.md` for human-facing installation detail
+- `docs/VERIFICATION.md` for doctor-script and verification guidance
 - `docs/WORKSPACE_MAP.md` for file placement decisions
 - `docs/OPTIMIZATION_PRINCIPLES.md` for repo philosophy
 - `docs/SOURCES.md` and `data/source-index.json` for official source grounding

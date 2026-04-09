@@ -69,6 +69,8 @@ That separation is the core design choice of this repo.
 | `data/source-index.json` | Machine-readable map of official references used here |
 | `scripts/install.ps1` | Safe Windows installer for merging this into an existing workspace |
 | `scripts/install.sh` | Safe Unix-like installer for merging this into an existing workspace |
+| `scripts/doctor.ps1` | Windows verification script for active-workspace detection and OpenClaw health checks |
+| `scripts/doctor.sh` | Unix-like verification script for active-workspace detection and OpenClaw health checks |
 
 ## If You Are The Agent
 
@@ -79,7 +81,8 @@ If an OpenClaw agent opens this repo and needs to know what to do next, the inte
 3. Read `BOOTSTRAP.md` if it still exists
 4. Use `docs/AGENT_QUICKSTART.md` for the exact install vs verify workflow
 5. Confirm whether this repo is the active workspace or only a cloned template
-6. Verify with `openclaw skills list`, `openclaw status`, and `openclaw memory status`
+6. Run `scripts/doctor.ps1` or `scripts/doctor.sh`
+7. Verify with `openclaw skills list`, `openclaw status`, and `openclaw memory status` when OpenClaw is available
 
 That flow is now encoded directly into the root workspace files so the next agent has less ambiguity.
 
@@ -104,7 +107,8 @@ In this state, the next action is:
    - `./scripts/install.sh` on Unix-like systems
 3. merge the relevant snippets from `config/` into `~/.openclaw/openclaw.json`
 4. restart the gateway or start a new session
-5. run verification
+5. run `scripts/doctor.ps1` or `scripts/doctor.sh`
+6. run verification
 
 ### State B: Active Workspace
 
@@ -117,8 +121,9 @@ In this state, the next action is:
 
 1. read `BOOT.md`
 2. read `BOOTSTRAP.md` if it still exists
-3. verify the environment
-4. report whether setup is complete or still missing config / restart steps
+3. run `scripts/doctor.ps1` or `scripts/doctor.sh`
+4. verify the environment
+5. report whether setup is complete or still missing config / restart steps
 
 ### State C: Installed But Not Verified
 
@@ -130,6 +135,7 @@ This means:
 In this state, run:
 
 ```bash
+./scripts/doctor.sh
 openclaw skills list
 openclaw status
 openclaw memory status
@@ -152,7 +158,8 @@ Use this sequence when you want Mini-fy to become a real working workspace rathe
 3. Run `openclaw setup --workspace <that-path>`.
 4. Merge the relevant `config/` examples into `~/.openclaw/openclaw.json`.
 5. Restart the gateway or begin a new session.
-6. Verify the setup.
+6. Run the doctor script.
+7. Verify the setup.
 
 ### Existing Workspace Flow
 
@@ -160,13 +167,15 @@ Use this sequence when you want Mini-fy to become a real working workspace rathe
 2. Let the installer back up conflicting files.
 3. Merge the relevant `config/` examples into `~/.openclaw/openclaw.json`.
 4. Restart the gateway or begin a new session.
-5. Verify the setup.
+5. Run the doctor script.
+6. Verify the setup.
 
 ### Verification Commands
 
 These are the minimum commands that should be run after installation:
 
 ```bash
+./scripts/doctor.sh
 openclaw skills list
 openclaw status
 openclaw memory status
@@ -212,6 +221,7 @@ Read:
 
 - `docs/AGENT_QUICKSTART.md`
 - `docs/INSTALL.md`
+- `docs/VERIFICATION.md`
 - `docs/WORKSPACE_MAP.md`
 - `docs/OPTIMIZATION_PRINCIPLES.md`
 - `docs/SOURCES.md`

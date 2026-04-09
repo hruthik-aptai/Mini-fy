@@ -55,3 +55,8 @@ printf '  1. Review USER.md, TOOLS.md, and HEARTBEAT.md\n'
 printf '  2. Merge config snippets from config/\n'
 printf '  3. Restart OpenClaw or start a new session\n'
 printf '  4. Run: openclaw skills list\n'
+
+if command -v openclaw >/dev/null 2>&1 && [ -f "${REPO_ROOT}/scripts/doctor.sh" ]; then
+  printf '\nRunning Mini-fy doctor...\n'
+  bash "${REPO_ROOT}/scripts/doctor.sh" "$TARGET" || true
+fi

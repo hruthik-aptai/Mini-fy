@@ -58,3 +58,15 @@ Write-Host "  1. Review USER.md, TOOLS.md, and HEARTBEAT.md"
 Write-Host "  2. Merge config snippets from config/"
 Write-Host "  3. Restart OpenClaw or start a new session"
 Write-Host "  4. Run: openclaw skills list"
+
+$DoctorScript = Join-Path $RepoRoot "scripts/doctor.ps1"
+if ((Get-Command openclaw -ErrorAction SilentlyContinue) -and (Test-Path -LiteralPath $DoctorScript)) {
+  Write-Host ""
+  Write-Host "Running Mini-fy doctor..."
+  try {
+    & $DoctorScript -Workspace $Target
+  }
+  catch {
+    Write-Host "Doctor run failed: $($_.Exception.Message)"
+  }
+}
